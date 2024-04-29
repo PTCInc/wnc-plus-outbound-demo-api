@@ -1,0 +1,33 @@
+# ----------------------------------------------------------------------------
+# This file is copyright (c) PTC, Inc.
+# All rights reserved.
+# 
+# Name:        dockerfileNodeJs
+# Description: This Dockerfile is used to build a Docker image for a Node.js application
+# with SSL certificate setup. It installs Node.js dependencies, copies application files,
+# sets up SSL certificates, and exposes the application on port 443.
+#
+# Update History:
+# 0.0.1: Initial Release
+#
+# Version: 0.0.1
+# ----------------------------------------------------------------------------
+
+# Inherit from the latest official Node.js image
+FROM node:latest
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+# Install Node.js dependencies
+RUN npm install
+# Copy all application files to the working directory
+COPY . .
+# Grant executable permission to setup-certs.sh script
+RUN chmod +x setup-certs.sh
+# Expose port 443 for HTTPS connections
+EXPOSE 443
+# Define a volume for storing SSL certificates
+VOLUME [ "/usr/src/app/certificates" ]
+# Execute setup-certs.sh and express app
+CMD ["bash", "-c", "./setup-certs.sh && npm start"]
