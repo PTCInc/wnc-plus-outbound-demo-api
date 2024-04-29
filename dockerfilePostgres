@@ -1,0 +1,24 @@
+# ----------------------------------------------------------------------------
+# This file is copyright (c) PTC, Inc.
+# All rights reserved.
+# 
+# Name:        dockerfilePostgres
+# Description: This Dockerfile is used to create a custom PostgreSQL image with
+# initialization scripts.
+#
+# Update History:
+# 0.0.1: Initial Release
+#
+# Version: 0.0.1
+# ----------------------------------------------------------------------------
+
+# Inherit from the latest official PostgreSQL image
+FROM postgres:latest
+# Copy initialization script to be executed during database initialization
+COPY init.sql /docker-entrypoint-initdb.d/
+# Set default environment variables for PostgreSQL
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD password
+ENV POSTGRES_DB materialManagement
+# Expose PostgreSQL default port for external connections
+EXPOSE 5432

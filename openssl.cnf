@@ -1,0 +1,39 @@
+# ----------------------------------------------------------------------------
+# This file is copyright (c) PTC, Inc.
+# All rights reserved.
+# 
+# Name:        openssl.cnf
+# Description: The openssl.cnf file configures OpenSSL for certificate generation.
+# The common name ($ENV::SERVER_CN) and alternative names (DNS and IP) are taken from
+# environment variables, facilitating flexible configuration for server certificates.
+#
+# Update History:
+# 0.0.1: Initial Release
+#
+# Version: 0.0.1
+# ----------------------------------------------------------------------------
+
+# Default settings for certificate requests
+[ req ]
+default_bits       = 2048
+default_keyfile    = server.key
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+prompt             = no
+
+# Distinguished name components
+[ req_distinguished_name ]
+countryName             = IN
+stateOrProvinceName     = MH
+localityName            = Pune
+organizationName        = AcmeServer
+commonName              = $ENV::SERVER_CN
+
+# Extensions for certificate requests
+[ req_ext ]
+subjectAltName = @alt_names
+
+# Alternative names for the certificate
+[alt_names]
+DNS.1   = $ENV::SERVER_DNS
+IP.1    = $ENV::SERVER_IP

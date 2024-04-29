@@ -1,0 +1,47 @@
+# ----------------------------------------------------------------------------
+# This file is copyright (c) PTC, Inc.
+# All rights reserved.
+# 
+# Name:        docker-compose.yml
+# Description: This Docker Compose configuration defines two services: `postgres` and
+# `nodejs`. It orchestrates the deployment of a PostgreSQL database and a Node.js
+# application within containers.
+
+#
+# Update History:
+# 0.0.1: Initial Release
+#
+# Version: 0.0.1
+# ----------------------------------------------------------------------------
+
+# Docker Compose version
+version: '3'
+
+# Define services
+services:
+  # PostgreSQL service configuration
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: materialManagement
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  # Node.js service configuration
+  nodejs:
+    container_name: nodejs
+    environment:
+      - SERVER_CN
+      - SERVER_DNS
+      - SERVER_IP
+    build:
+      context: .
+      dockerfile: dockerfileNodeJs
+    depends_on:
+      - postgres
+    ports:
+      - "443:443"
+    volumes:
+    - ./certificates/:/usr/src/app/certificates/
