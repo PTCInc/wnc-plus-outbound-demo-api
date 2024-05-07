@@ -8,7 +8,7 @@
 sudo docker network create mynetwork
 ```
 
-2\. Build and run PostgreSQL container
+2\. Build and run the PostgreSQL container
 
 ```plaintext
 sudo docker build -t mypostgresimage -f dockerfilePostgres .
@@ -18,7 +18,7 @@ sudo docker build -t mypostgresimage -f dockerfilePostgres .
 sudo docker run --network=mynetwork --name postgres -d mypostgresimage
 ```
 
-3\. Build and run Node.js container
+3\. Build and run the Node.js container
 
 ```plaintext
 sudo docker build -t mynodejsimage -f dockerfileNodeJs .
@@ -32,7 +32,7 @@ sudo docker run -e SERVER_CN=<myservername.com> SERVER_DNS=<myserverdns> SERVER_
 
 You can now access the endpoints on `https://<SERVER_DNS>:443` or `https://<SERVER_IP>:443`.
 
-4\. To stop docker containers
+4\. To stop the docker containers
 
 ```plaintext
 sudo docker stop nodejs

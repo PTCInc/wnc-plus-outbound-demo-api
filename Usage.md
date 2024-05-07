@@ -11,7 +11,7 @@
 
 ### **SSL Certificates**
 
-Server and client certificates are generated automatically when container is started. You will see certificates folder generated in current working directory. It contains client certificate chain and server certificate chain.
+The server and client certificates are generated automatically when the container is started. You will see a certificates folder generated in the current working directory. It contains the client certificate chain and server certificate chain.
 
 ### Authentication
 
