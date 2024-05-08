@@ -12,7 +12,7 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-2\. Run the docker-compose file
+2\. Run docker-compose file
 
 > Replace \<myservername.com> with your server hostname, \<myserverdns> with your server DNS and \<0.0.0.0> with your server's IP.
 
