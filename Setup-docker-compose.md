@@ -2,7 +2,7 @@
 
 ### Using Docker-Compose -
 
-1\. Install the docker-compose
+1\. Install docker-compose
 
 ```plaintext
 sudo curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -24,7 +24,7 @@ sudo SERVER_CN=<myservername.com> SERVER_DNS=<myserverdns> SERVER_IP=<0.0.0.0> d
 
 You can now access the endpoints on `https://<SERVER_DNS>:443` or `https://<SERVER_IP>:443`.
 
-3\. To stop the docker-compose
+3\. To stop docker-compose
 
 ```plaintext
 sudo docker-compose down --volumes
