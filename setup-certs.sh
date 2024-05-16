@@ -16,31 +16,31 @@
 # Update History:
 # 0.0.1: Initial Release
 #
-# Version: 0.0.1
+# Version: 0.0.2
 # ----------------------------------------------------------------------------
 
 #!/usr/bin/env bash
 mkdir -p certificates/certs
 
-# Export environment variables
+# Export environment variables (these are used in openssl.cnf)
 export SERVER_CN=${SERVER_CN:-AcmeServer}
 export SERVER_DNS=${SERVER_DNS:-AcmeServer.com}
 export SERVER_IP=${SERVER_IP:-0.0.0.0}
 
 # Generate Root certificates
-openssl genrsa -out certificates/certs/root.key 2048
-openssl req -new -sha256 -key certificates/certs/root.key -out certificates/certs/root.csr -subj "/C=IN/ST=Maharashtra/L=Pune/O=Acme/CN=acme.root.com"
-openssl x509 -req -sha256 -days 30 -in certificates/certs/root.csr -signkey certificates/certs/root.key -out certificates/certs/root.crt
+[ -f certificates/certs/root.key ] || openssl genrsa -out certificates/certs/root.key 2048
+[ -f certificates/certs/root.csr ] || openssl req -new -sha256 -key certificates/certs/root.key -out certificates/certs/root.csr -subj "/C=IN/ST=Maharashtra/L=Pune/O=Acme/CN=root.acme.com"
+[ -f certificates/certs/root.crt ] || openssl x509 -req -sha256 -days 30 -in certificates/certs/root.csr -signkey certificates/certs/root.key -out certificates/certs/root.crt
 
 # Generate Server certificates
-openssl genrsa -out certificates/certs/server.key 2048
-openssl req -new -sha256 -key certificates/certs/server.key -out certificates/certs/server.csr -config <(cat openssl.cnf)
-openssl x509 -req -in certificates/certs/server.csr -CA certificates/certs/root.crt -CAkey certificates/certs/root.key -CAcreateserial -out certificates/certs/server.crt -days 30 -sha256 -extfile <(cat openssl.cnf) -extensions req_ext
+[ -f certificates/certs/server.key ] || openssl genrsa -out certificates/certs/server.key 2048
+[ -f certificates/certs/server.csr ] || openssl req -new -sha256 -key certificates/certs/server.key -out certificates/certs/server.csr -config <(cat openssl.cnf)
+[ -f certificates/certs/server.crt ] || openssl x509 -req -in certificates/certs/server.csr -CA certificates/certs/root.crt -CAkey certificates/certs/root.key -CAcreateserial -out certificates/certs/server.crt -days 30 -sha256 -extfile <(cat openssl.cnf) -extensions req_ext
 
 # Generate Client certificates
-openssl genrsa -out certificates/certs/client.key 2048
-openssl req -new -sha256 -key certificates/certs/client.key -out certificates/certs/client.csr -subj "/C=IN/ST=Maharashtra/L=Nagpur/O=AcmeClient/CN=client.acmeclient.com"
-openssl x509 -req -in certificates/certs/client.csr -CA certificates/certs/root.crt -CAkey certificates/certs/root.key -CAcreateserial -out certificates/certs/client.crt -days 30 -sha256
+[ -f certificates/certs/client.key ] || openssl genrsa -out certificates/certs/client.key 2048
+[ -f certificates/certs/client.csr ] || openssl req -new -sha256 -key certificates/certs/client.key -out certificates/certs/client.csr -subj "/C=IN/ST=Maharashtra/L=Nagpur/O=AcmeClient/CN=client.acmeclient.com"
+[ -f certificates/certs/client.crt ] || openssl x509 -req -in certificates/certs/client.csr -CA certificates/certs/root.crt -CAkey certificates/certs/root.key -CAcreateserial -out certificates/certs/client.crt -days 30 -sha256
 
 # Create client.keycertchain file containing chain of key, client certificate and root certificate
 cat certificates/certs/client.key > certificates/client.keycertchain
