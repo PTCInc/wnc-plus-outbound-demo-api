@@ -13,6 +13,8 @@
 
 The server and client certificates are generated automatically when the container is started. You will see a certificates folder generated in the current working directory. It contains the client certificate chain and server certificate chain.
 
+> Note - Certificates remain valid for 30 days from when the docker container starts. If that time period passes, the certificates will expire. To get new certificates, just delete the `certificates` folder and restart the Docker containers.
+
 ### Authentication
 
 To obtain a bearer token, make a POST request to `https://localhost:443/generateToken` with the following JSON data:
