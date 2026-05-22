@@ -2,30 +2,28 @@
 
 ### Using Docker-Compose -
 
-1\. Install docker-compose
+1. Install docker compose
 
-```plaintext
-sudo curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+```bash
+curl --retry 3 -sLo- "https://get.docker.com" | bash
+# appends docker group to local login to avoid prefixing every docker command with sudo
+sudo usermod --append --groups docker $(id -un)
+# need to launch a new shell after this command
 ```
 
-```plaintext
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-2\. Run docker-compose file
+2. Run containers
 
 > Replace \<myservername.com> with your server hostname, \<myserverdns> with your server DNS and \<0.0.0.0> with your server's IP.
 
-```plaintext
-sudo SERVER_CN=<myservername.com> SERVER_DNS=<myserverdns> SERVER_IP=<0.0.0.0> docker-compose up -d
+```bash
+SERVER_CN=<myservername.com> SERVER_DNS=<myserverdns> SERVER_IP=<0.0.0.0> docker-compose up -d
+# example: SERVER_CN=$(hostname) SERVER_DNS=$(hostname --fqdn) SERVER_IP=$(hostname -I | awk '{print $1;}') docker-compose up -d
 ```
-
-> Example, SERVER_CN=nodejs-https-server SERVER_DNS=nodejs-https-server.rx.internal.cloudapp.net SERVER_IP=20.235.43.50 docker-compose up -d
 
 You can now access the endpoints on `https://<SERVER_DNS>:443` or `https://<SERVER_IP>:443`.
 
-3\. To stop docker-compose
+3. To stop containers
 
-```plaintext
-sudo docker-compose down --volumes
+```bash
+docker-compose down --volumes
 ```

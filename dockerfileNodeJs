@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------
 # This file is copyright (c) PTC, Inc.
 # All rights reserved.
-# 
+#
 # Name:        dockerfileNodeJs
 # Description: This Dockerfile is used to build a Docker image for a Node.js application
 # with SSL certificate setup. It installs Node.js dependencies, copies application files,

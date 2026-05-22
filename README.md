@@ -12,7 +12,7 @@ Review [License](license.md) for more information.
 
 ## Overview
 
-This project aims to develop a robust and secure material management system using Docker, Node.js, and PostgreSQL. It provides a comprehensive solution for managing materials efficiently, with features including database initialization, SSL certificate setup, and secure communication. The API supports bearer token authentication and provides various endpoints for managing material data.
+This project aims to develop a sample material management system using Docker, Node.js, and PostgreSQL. It provides a demonstrative solution for managing materials, with features including database initialization, SSL certificate setup, and secure communication. The API supports bearer token authentication and provides various endpoints for managing material data.
 
 ## Prerequisites
 
@@ -23,6 +23,6 @@ Docker CLI: Ensure that Docker CLI is installed on your machine to build and run
 Choose one of following methods for setting up your system
 - [Setup-docker-compose.md](Setup-docker-compose.md)    (Recommended)
 - [Setup-docker.md](Setup-docker.md)
-- [Setup-local-system.md](Setup-local-system.md)    
+- [Setup-local-system.md](Setup-local-system.md)
 
 Then, follow the [Usage.md](Usage.md) instructions.
