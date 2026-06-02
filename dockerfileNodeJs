@@ -9,12 +9,13 @@
 #
 # Update History:
 # 0.0.1: Initial Release
+# 0.0.2: Pin node version to 18
 #
-# Version: 0.0.1
+# Version: 0.0.2
 # ----------------------------------------------------------------------------
 
-# Inherit from the latest official Node.js image
-FROM node:latest
+# Inherit from the official Node.js version 18 image
+FROM node:18
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to the working directory
