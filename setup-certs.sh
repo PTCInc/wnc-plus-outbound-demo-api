@@ -1,12 +1,12 @@
 # ----------------------------------------------------------------------------
 # This file is copyright (c) PTC, Inc.
 # All rights reserved.
-# 
+#
 # Name:        setup-certs.sh
 # Description: This shell script (setup-certs.sh) generates self-signed root, client,
 # and server certificates for secure communication. It utilizes OpenSSL to create the
-# certificates. The client and server certificate is signed by the root certificate. Configuration 
-# values for the server certificate are extracted from the openssl.cnf file. Environment 
+# certificates. The client and server certificate is signed by the root certificate. Configuration
+# values for the server certificate are extracted from the openssl.cnf file. Environment
 # variables such as SERVER_CN, SERVER_DNS, and SERVER_IP are used in the openssl.cnf file
 # and must be provided by the user when running the Docker containers. The client certificate
 # is bundled in the client.keycertchain format, including the client key, client certificate,
@@ -23,8 +23,8 @@
 mkdir -p certificates/certs
 
 # Export environment variables (these are used in openssl.cnf)
-export SERVER_CN=${SERVER_CN:-AcmeServer}
-export SERVER_DNS=${SERVER_DNS:-AcmeServer.com}
+export SERVER_CN=${SERVER_CN:-acmeserver}
+export SERVER_DNS=${SERVER_DNS:-acmeserver.com}
 export SERVER_IP=${SERVER_IP:-0.0.0.0}
 
 # Generate Root certificates
@@ -42,19 +42,22 @@ export SERVER_IP=${SERVER_IP:-0.0.0.0}
 [ -f certificates/certs/client.csr ] || openssl req -new -sha256 -key certificates/certs/client.key -out certificates/certs/client.csr -subj "/C=IN/ST=Maharashtra/L=Nagpur/O=AcmeClient/CN=client.acmeclient.com"
 [ -f certificates/certs/client.crt ] || openssl x509 -req -in certificates/certs/client.csr -CA certificates/certs/root.crt -CAkey certificates/certs/root.key -CAcreateserial -out certificates/certs/client.crt -days 30 -sha256
 
-# Create client.keycertchain file containing chain of key, client certificate and root certificate
-cat certificates/certs/client.key > certificates/client.keycertchain
-cat certificates/certs/client.crt >> certificates/client.keycertchain
-cat certificates/certs/root.crt >> certificates/client.keycertchain
+if [ ! -f certificates/client.keycertchain ]; then
+    # Create client.keycertchain file containing chain of key, client certificate and root certificate
+    cat certificates/certs/client.key > certificates/client.keycertchain
+    cat certificates/certs/client.crt >> certificates/client.keycertchain
+    cat certificates/certs/root.crt >> certificates/client.keycertchain
+fi
 
 echo
 echo "=== Client PEM bundle ==="
 cat certificates/client.keycertchain
 
-# Create server.certchain file containing chain of server certificate and root certificate
-cat certificates/certs/server.crt > certificates/server.certchain
-cat certificates/certs/root.crt >> certificates/server.certchain
-
+if [ ! -f certificates/server.certchain ]; then
+    # Create server.certchain file containing chain of server certificate and root certificate
+    cat certificates/certs/server.crt > certificates/server.certchain
+    cat certificates/certs/root.crt >> certificates/server.certchain
+fi
 echo
 echo "=== Server PEM bundle ==="
 cat certificates/server.certchain
