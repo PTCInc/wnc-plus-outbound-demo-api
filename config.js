@@ -1,17 +1,18 @@
 /*****************************************************************************
- * 
+ *
  * This file is copyright (c) PTC, Inc.
  * All rights reserved.
- * 
+ *
  * Name:        config.js
  * Description: This file contains configuration settings for the application. It utilizes the
- * 'dotenv' module to load environment variables from a '.env' file and 'assert' module for 
+ * 'dotenv' module to load environment variables from a '.env' file and 'assert' module for
  * ensuring that required environment variables are defined.
- * 
+ *
  * Update History:
  * 0.0.1:   Initial Release
- * 
- * Version:     0.0.1
+ * 0.0.2:   Dropped reference to url
+ *
+ * Version:     0.0.2
 ******************************************************************************/
 
 const dotenv = require('dotenv');
@@ -21,7 +22,7 @@ const assert = require('assert');
 dotenv.config();
 
 // Destructure required environment variables
-const {PORT, HOST, HOST_URL, USER, PASSWORD, DATABASE, SERVER, DBPORT} = process.env;
+const {PORT, HOST, USER, PASSWORD, DATABASE, SERVER, DBPORT} = process.env;
 
 assert(PORT, 'PORT is required');
 assert(HOST, "HOST is required");
@@ -30,7 +31,6 @@ assert(HOST, "HOST is required");
 module.exports = {
     port: PORT,
     host: HOST,
-    url: HOST_URL,
     // PostgreSQL database connection parameters
     postgreSql:{
         user: USER,

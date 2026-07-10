@@ -10,25 +10,28 @@
 # Update History:
 # 0.0.1: Initial Release
 # 0.0.2: Pin node version to 18
+# 0.0.3: Run as appuser with ID 2000 on port 8443
 #
-# Version: 0.0.2
+# Version: 0.0.3
 # ----------------------------------------------------------------------------
 
 # Inherit from the official Node.js version 18 image
 FROM node:18
+ARG UID=1000
+ARG GID=1000
+RUN mkdir -p /app \
+    && chown -R ${UID}:${GID} /app
+# Switch to user appuser
+USER ${UID}:${GID}
 # Set the working directory inside the container
-WORKDIR /usr/src/app
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+WORKDIR /app
+# Copy all application files to the working directory
+COPY --chown=${UID}:${GID} . .
 # Install Node.js dependencies
 RUN npm install
-# Copy all application files to the working directory
-COPY . .
-# Grant executable permission to setup-certs.sh script
-RUN chmod +x setup-certs.sh
 # Expose port 443 for HTTPS connections
-EXPOSE 443
+EXPOSE 8443
 # Define a volume for storing SSL certificates
-VOLUME [ "/usr/src/app/certificates" ]
+VOLUME [ "/app/certificates" ]
 # Execute setup-certs.sh and express app
 CMD ["bash", "-c", "./setup-certs.sh && npm start"]
