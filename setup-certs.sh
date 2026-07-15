@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # ----------------------------------------------------------------------------
 # This file is copyright (c) PTC, Inc.
 # All rights reserved.
@@ -19,7 +20,6 @@
 # Version: 0.0.2
 # ----------------------------------------------------------------------------
 
-#!/usr/bin/env bash
 mkdir -p certificates/certs
 
 # Export environment variables (these are used in openssl.cnf)

@@ -1,16 +1,16 @@
 /*****************************************************************************
- * 
+ *
  * This file is copyright (c) PTC, Inc.
  * All rights reserved.
- * 
+ *
  * Name:        index.js
- * Description: This Node.js file sets up an Express server to provide a RESTful API with 
+ * Description: This Node.js file sets up an Express server to provide a RESTful API with
  * JWT (JSON Web Token) authentication over HTTPS. The server uses client certificate authentication
  *  for secure communication.
- * 
+ *
  * Update History:
  * 0.0.1:   Initial Release
- * 
+ *
  * Version:     0.0.1
 ******************************************************************************/
 
@@ -62,7 +62,7 @@ function verifyToken(req, res, next){
         res.sendStatus(403);
       } else {
         req.authData = authData;
-        next(); 
+        next();
       }
     });
   }else{

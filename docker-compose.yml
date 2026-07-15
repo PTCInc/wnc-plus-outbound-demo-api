@@ -11,8 +11,9 @@
 # Update History:
 # 0.0.1: Initial Release
 # 0.0.2: Dropped obsolete version field
+# 0.0.3: Changes to run nodejs as non-root user on port 8443
 #
-# Version: 0.0.2
+# Version: 0.0.3
 # ----------------------------------------------------------------------------
 
 # Define services
@@ -29,6 +30,7 @@ services:
     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   # Node.js service configuration
   nodejs:
+    user: "${UID}:${GID}"
     container_name: nodejs
     environment:
     - SERVER_CN
@@ -37,9 +39,12 @@ services:
     build:
       context: .
       dockerfile: dockerfileNodeJs
+      args:
+        UID: ${UID}
+        GID: ${GID}
     depends_on:
     - postgres
     ports:
-    - "443:443"
+    - "443:8443"
     volumes:
-    - ./certificates/:/usr/src/app/certificates/
+    - ./certificates/:/app/certificates/
